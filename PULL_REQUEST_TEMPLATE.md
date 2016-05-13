@@ -1,0 +1,3 @@
+#### Reflect and summarize on the in-class process:
+ex: Today, I learned ... 
+- [ ] I have entered the Pull Request title in the format of "MyName"
