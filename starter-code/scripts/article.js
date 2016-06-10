@@ -7,11 +7,15 @@ function Article (opts) {
 }
 
 Article.prototype.toHtml = function(scriptTemplateId) {
-  var template = Handlebars.compile($(scriptTemplateId).html());
+  var template = Handlebars.compile($(scriptTemplateId).text());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
-  this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
-  this.body = marked(this.body);
+  if(this.daysAgo < 1) {
+    this.publishStatus = '(published today)';
+  } else {
+    this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
+  }
+  // TODO: Parse any markdown with marked!
 
   return template(this);
 };

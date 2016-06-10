@@ -1,11 +1,10 @@
 // Configure a view object, to hold all our functions for dynamic updates and article-related event handlers.
 var articleView = {};
 
-articleView.generateArticleSection = function() {
+articleView.render = function() {
   articles.forEach(function(a) {
     $('#articles').append(a.toHtml('#article-template'));
     $('#author-filter').append(a.toHtml('#author-filter-template'));
-
     if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
       $('#category-filter').append(a.toHtml('#category-filter-template'));
     };
@@ -43,53 +42,60 @@ articleView.handleMainNav = function() {
     $('.tab-content').hide();
     $('#' + $(this).data('content')).fadeIn();
   });
-
-  $('.main-nav .tab:first').click(); // Let's now trigger a click on the first .tab element, to set up the page.
+  $('.main-nav .tab:first').click();
 };
 
 articleView.setTeasers = function() {
-  $('.article-body *:nth-of-type(n+2)').hide(); // Hide elements beyond the first 2 in any artcile body.
-
-  $('#articles').on('click', 'a.read-on', function(e) {
+  $('.article-body *:nth-of-type(n+2)').hide();
+  $('article').on('click', 'a.read-on', function(e) {
     e.preventDefault();
-    $(this).parent().find('*').fadeIn();
-    $(this).hide();
+    if($(this).text() === 'Read on →') {
+      $(this).parent().find('*').fadeIn();
+      $(this).html('Show Less &larr;');
+    } else {
+      $('body').animate({
+        scrollTop: ($(this).parent().offset().top)
+      },200);
+      $(this).html('Read on &rarr;');
+      $(this).parent().find('.article-body *:nth-of-type(n+2)').hide();
+    }
   });
 };
 
 articleView.initNewArticlePage = function() {
-  // TODO: Ensure the main .tab-content area is revealed. We might add more tabs later.
-
-  // TODO: The new articles we create will be copy/pasted into our source data file.
+  // TODO: The new articles we create need transferring into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we
   // have data to export. Also, let's add a focus event to help us select the JSON.
 
   // TODO: Add an event handler to update the preview and the export field if any inputs change.
+
 };
 
 articleView.create = function() {
-  // TODO: Set up a var to hold the new article we are creating.
+  // TODO: Clear out our preview, to be replaced by the updated preview
+
+  // TODO: Instantiate an Article based on what's in the form fields:
   var formArticle = new Article({
 
   });
-  // Clear out the #articles element, so we can put in the updated preview
+  /* TODO: Use our own interface to the Handblebars template
+          to put this new article into the DOM: */
 
-  // TODO: Instantiate an article based on what's in the form fields:
-
-  // TODO: Since formArticle is an instance of the Article constructor,
-  // we can use the .toHtml method on it to append this new article
-  // into the DOM:
-
-  // TODO: Activate the highlighting of any code blocks:
+  // TODO: Activate the highlighting of any code blocks (ex:
+  /*
+  ```
+  function coolStory() {
+    return 'Hooray! Code highlighting!';
+  };
+  ``` */
 
   // TODO: Export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
+
 };
 
-
-articleView.initIndexPage = function() {
-  articleView.handleCategoryFilter();
-  articleView.handleAuthorFilter();
-  articleView.handleMainNav();
-  articleView.setTeasers();
-  articleView.generateArticleSection();
-};
+articleView.initNewArticlePage();
+articleView.handleCategoryFilter();
+articleView.handleAuthorFilter();
+articleView.handleMainNav();
+articleView.setTeasers();
+articleView.render();

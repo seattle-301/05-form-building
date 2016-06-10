@@ -14,18 +14,17 @@
     <link rel="icon" type="image/x-icon" href="https://i.imgur.com/7v5ASc8.png">
     <script id="article-template" type="text/x-handlebars-template">
       <article
-        class="clearfix"
+        class="clearfix preview"
         data-author="{{author}}"
         data-category="{{category}}">
         <header>
           <h1>{{title}}</h1>
           <div class="byline">
-            By <address><a href="{{authorUrl}}">{{author}}</a></address>
-            {{publishStatus}}
+            By <address><a href="{{authorUrl}}">{{author}}</a></address><br>
+            <span>{{publishStatus}}</span>
           </div>
         </header>
         <section class="article-body">{{{body}}}</section>
-        <a href="#" class="read-on">Read on &rarr;</a>
       </article>
     </script>
     </head>
@@ -48,27 +47,10 @@
     <main class="clearfix">
       <section id="write" class="tab-content">
         <h1>New Article</h1>
-        <!-- DONE: Set up a form to accept user input for a new blog article: -->
-        <form action="#" id="new-form">
-          <label>
-            <input type="text" id="article-title" placeholder="Article title" required>
-          </label>
-          <textarea id="article-body" rows="8" cols="40" required></textarea>
-          <label>
-            <input type="text" id="article-author" placeholder="Author Name" required>
-          </label>
-          <label>
-            <input type="text" id="article-author-url" placeholder="Author's URL" required>
-          </label>
-          <label>
-            <input type="text" id="article-category" placeholder="Category" required>
-          </label>
-          <label>
-            <input type="checkbox" id="article-published"> Published
-          </label>
-        </form>
+        <!-- TODO: Set up a form to accept user input for a new blog article: -->
+
       </section>
-      <section id="articles" class="tab-content">
+      <section id="article-preview" class="tab-content">
 
       </section>
       <section id="article-export">
@@ -89,9 +71,5 @@
     <script src="/scripts/blogArticles.js"></script>
     <script src="/scripts/article.js"></script>
     <script src="/scripts/articleView.js"></script>
-    <script>
-      // DONE: Initialize page behaviors, and run code:
-      articleView.initNewArticlePage();
-    </script>
   </body>
 </html>
