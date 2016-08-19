@@ -7,7 +7,7 @@ function Article (opts) {
 }
 
 Article.prototype.toHtml = function(scriptTemplateId) {
-  var template = Handlebars.compile($(scriptTemplateId).text());
+  var renderTemplate = Handlebars.compile($(scriptTemplateId).text());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
   if(this.daysAgo < 1) {
@@ -17,7 +17,7 @@ Article.prototype.toHtml = function(scriptTemplateId) {
   }
   // TODO: Parse any markdown with marked!
   this.body = marked(this.body);
-  return template(this);
+  return renderTemplate(this);
 };
 
 ourLocalData.sort(function(a,b) {
